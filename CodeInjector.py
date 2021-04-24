@@ -20,6 +20,8 @@ def process_packet(packet):
             print("[+] Request")
 #regex to replace the first arg with a empty string
             modified_load = re.sub("Accept-Encoding:.*?\\r\\n", "", scapy_packet[scapy.Raw].load)
+#set modified_load into the scapy_packet as new_packet
+            new_packet = set_load(scapy_packet, modified_load)
 #check packets source port for 80 (http) RESPONSES
         elif scapy_packet[scapy.TCP].sport == 80:
             print("[+] Response")
