@@ -29,8 +29,8 @@ def process_packet(packet):
 #use regex to search for Content-Length in entire packet; ?: will search for item but not return it
             content_length_search = re.search("(?:Content-Length:\s)(\d*)", load)
             if content_length_search:
-#group(0) matches first item from entire str
-                content_length = content_length_search.group(0)
+#group(1) matches second item from entire str above (\d*) digits
+                content_length = content_length_search.group(1)
                 print(content_length)
 #if state if load is not the same as the scapy packet Raw layer load then modify the packet
         if load != scapy_packet[scapy.Raw].load:
